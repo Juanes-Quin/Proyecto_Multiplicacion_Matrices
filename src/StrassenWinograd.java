@@ -1,5 +1,20 @@
+/**
+ * Esta clase contiene un método para multiplicar dos matrices utilizando el algoritmo de Strassen-Winograd.
+ *  @author Marlon Stiven Espinosa Joaqui
+ *  @author Juan Esteban Quintero Rodriguez
+ *  @author Jesus Santiago Ramon Ramos
+ */
 public class StrassenWinograd {
 
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando el algoritmo de Strassen-Winograd.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz en la que se almacenará el resultado de la multiplicación.
+     * @param N El número de filas de la matriz A y el número de filas de la matriz resultado.
+     * @param P El número de columnas de la matriz A y el número de filas de la matriz B.
+     * @param M El número de columnas de la matriz B y el número de columnas de la matriz resultado.
+     */
     public void algStrassenWinograd(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int P, int M) {
         int maxSize, valorK, valorM,  newSize, i, j;
         maxSize = max(N,P);
@@ -51,6 +66,14 @@ public class StrassenWinograd {
 
     }
 
+    /**
+     * Este método realiza un paso del algoritmo de Strassen-Winograd.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz en la que se almacenará el resultado del paso.
+     * @param N El tamaño de las matrices.
+     * @param valorM El valor de M ajustado.
+     */
     private void strassenWinogradStep(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int valorM) {
         int i , j, newSize;
 
@@ -257,6 +280,15 @@ public class StrassenWinograd {
         }
     }
 
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando el algoritmo estándar.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz en la que se almacenará el resultado de la multiplicación.
+     * @param N El número de filas de la matriz A.
+     * @param P El número de columnas de la matriz A y el número de filas de la matriz B.
+     * @param M El número de columnas de la matriz B.
+     */
     public static void algoritmoNaivStandard(double[][] matrizA,double[][] matrizB,double[][] matrizRes,int N, int P, int M)
     {
         double aux;
@@ -271,6 +303,14 @@ public class StrassenWinograd {
         }
     }
 
+    /**
+     * Este método suma dos matrices.
+     * @param matrizA La primera matriz a sumar.
+     * @param matrizB La segunda matriz a sumar.
+     * @param matrizRes La matriz en la que se almacenará el resultado de la suma.
+     * @param N El número de filas de las matrices.
+     * @param M El número de columnas de las matrices.
+     */
     private void plus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
         for (int i = 0; i < N;i++) {
             for (int j = 0; j < M; j++) {
@@ -279,6 +319,14 @@ public class StrassenWinograd {
         }
     }
 
+    /**
+     * Este método resta dos matrices.
+     * @param matrizA La matriz a la que se resta.
+     * @param matrizB La matriz que se resta.
+     * @param matrizRes La matriz en la que se almacenará el resultado de la resta.
+     * @param N El número de filas de las matrices.
+     * @param M El número de columnas de las matrices.
+     */
     private void minus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -286,6 +334,12 @@ public class StrassenWinograd {
             }
         }
     }
+    /**
+     * Este método determina el máximo entre dos números.
+     * @param N El primer número a comparar.
+     * @param P El segundo número a comparar.
+     * @return El máximo entre N y P.
+     */
     public int max (int N, int P){
         if (N < P){
             return P;

@@ -1,4 +1,19 @@
+/**
+ * Esta clase contiene un método para multiplicar dos matrices utilizando un enfoque secuencial por bloques.
+ * Dividiendo las matrices en bloques más pequeños y realizando operaciones de multiplicación en cada bloque.
+ *  @author Marlon Stiven Espinosa Joaqui
+ *  @author Juan Esteban Quintero Rodriguez
+ *  @author Jesus Santiago Ramon Ramos
+ */
 public class IV_3_Sequential_Block {
+
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando un enfoque secuencial por bloques.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param size1 El tamaño de la matriz resultado en la dimensión 1.
+     * @param size2 El tamaño de los bloques utilizados para la multiplicación.
+     */
     public  void alg_IV_3_Sequential_Block(double [][] matrizA, double [][] matrizB, int size1, int size2) {
         double[][] matrizRes = new double[size1][size2];
         for (int i1 = 0; i1 < size1; i1 += size2) {

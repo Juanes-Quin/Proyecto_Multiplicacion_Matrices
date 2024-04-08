@@ -1,4 +1,20 @@
+/**
+ * Esta clase contiene un método para multiplicar dos matrices utilizando un enfoque secuencial por bloques.
+ * Dividiendo las matrices en bloques más pequeños y realizando operaciones de multiplicación en cada bloque.
+ *  @author Marlon Stiven Espinosa Joaqui
+ *  @author Juan Esteban Quintero Rodriguez
+ *  @author Jesus Santiago Ramon Ramos
+ */
 public class WinogradScaled {
+    /**
+     * Este método implementa el algoritmo de Winograd escalado para la multiplicación de matrices.
+     * @param matrizA La matriz A.
+     * @param matrizB La matriz B.
+     * @param matrizRes La matriz resultante.
+     * @param N El número de filas de la matriz A.
+     * @param P El número de columnas de la matriz A y el número de filas de la matriz B.
+     * @param M El número de columnas de la matriz B.
+     */
     public void algWinogradScaled(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int P, int M ) {
         int i, j;
         double[][] copyA = new double[N][P];
@@ -15,6 +31,15 @@ public class WinogradScaled {
 
     }
 
+    /**
+     * Este método implementa el algoritmo original de Winograd para la multiplicación de matrices.
+     * @param matrizA La matriz A.
+     * @param matrizB La matriz B.
+     * @param matrizRes La matriz resultante.
+     * @param N El número de filas de la matriz A.
+     * @param P El número de columnas de la matriz A y el número de filas de la matriz B.
+     * @param M El número de columnas de la matriz B.
+     */
     private void algWinogradOriginal(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int i, j, k;
         double aux;
@@ -69,6 +94,14 @@ public class WinogradScaled {
 
     }
 
+    /**
+     * Este método multiplica una matriz por un escalar.
+     * @param matrizA La matriz que se multiplicará por el escalar.
+     * @param matrizB La matriz resultante de la multiplicación.
+     * @param N El número de filas de la matriz.
+     * @param M El número de columnas de la matriz.
+     * @param scalar El escalar por el que se multiplicará la matriz.
+     */
     private void multiplyWithScalar(double[][] matrizA, double[][] matrizB, int N, int M, double scalar) {
         int i , j;
         for(i = 0; i < N; i++) {
@@ -78,6 +111,13 @@ public class WinogradScaled {
         }
     }
 
+    /**
+     * Este método calcula la norma infinito de una matriz.
+     * @param matrizA La matriz para la cual se calculará la norma infinito.
+     * @param N El número de filas de la matriz.
+     * @param M El número de columnas de la matriz.
+     * @return La norma infinito de la matriz.
+     */
     private double normInf(double[][] matrizA, int N, int M) {
         int i, j;
         double max = Double.NEGATIVE_INFINITY;

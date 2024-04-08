@@ -1,4 +1,21 @@
+/**
+ * Esta clase implementa el algoritmo original de Winograd para la multiplicación de matrices.
+ * El algoritmo de Winograd reduce la cantidad de operaciones requeridas para la multiplicación de matrices
+ * mediante el uso de operaciones adicionales de preprocesamiento y posprocesamiento.
+ *  @author Marlon Stiven Espinosa Joaqui
+ *  @author Juan Esteban Quintero Rodriguez
+ *  @author Jesus Santiago Ramon Ramos
+ */
 public class WinogradOriginal {
+    /**
+     * Este método implementa el algoritmo original de Winograd para la multiplicación de matrices.
+     * @param matrizA La matriz A.
+     * @param matrizB La matriz B.
+     * @param matrizRes La matriz resultante.
+     * @param N El número de filas de la matriz A y el número de columnas de la matriz resultante.
+     * @param P El número de columnas de la matriz A y el número de filas de la matriz B.
+     * @param M El número de filas de la matriz B y el número de filas de la matriz resultante.
+     */
     public void algWinogradOriginal(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int P, int M ) {
         int i, j, k;
         double aux;

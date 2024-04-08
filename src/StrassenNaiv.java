@@ -1,4 +1,20 @@
+/**
+ * Esta clase contiene un método para multiplicar dos matrices utilizando el algoritmo de Strassen.
+ *  @author Marlon Stiven Espinosa Joaqui
+ *  @author Juan Esteban Quintero Rodriguez
+ *  @author Jesus Santiago Ramon Ramos
+ */
 public class StrassenNaiv {
+
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando el algoritmo de Strassen de manera ingenua.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz en la que se almacenará el resultado de la multiplicación.
+     * @param N El número de filas de la matriz A y el número de filas de la matriz resultado.
+     * @param P El número de columnas de la matriz A y el número de filas de la matriz B.
+     * @param M El número de columnas de la matriz B y el número de columnas de la matriz resultado.
+     */
     public void algStrassenNaiv(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int maxSize, k, m, newSize, i, j;
         maxSize = max(N,P);
@@ -45,6 +61,14 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método realiza un paso del algoritmo de Strassen de manera ingenua.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz en la que se almacenará el resultado del paso.
+     * @param N El tamaño de las matrices.
+     * @param m El tamaño de las matrices ajustado.
+     */
     private void strassenNaivStep(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int m) {
         int i, j, newSize;
 
@@ -243,6 +267,15 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método realiza el algoritmo estándar de multiplicación de matrices.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz en la que se almacenará el resultado.
+     * @param N El número de filas de la matriz A y el número de filas de la matriz resultado.
+     * @param P El número de columnas de la matriz A y el número de filas de la matriz B.
+     * @param M El número de columnas de la matriz B y el número de columnas de la matriz resultado.
+     */
     private void algoritmoNaivStandard(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         double aux;
         for (int i = 0; i < N; i++) {
@@ -256,6 +289,12 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método calcula el máximo entre dos números.
+     * @param N El primer número.
+     * @param P El segundo número.
+     * @return El máximo entre los dos números.
+     */
     private int max(int N, int P) {
         if (N < P) {
             return P;
@@ -264,6 +303,14 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método resta dos matrices.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz en la que se almacenará el resultado de la resta.
+     * @param N El número de filas de las matrices.
+     * @param M El número de columnas de las matrices.
+     */
     private void minus(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int M) {
         for (int i =0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -272,6 +319,14 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método suma dos matrices.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz en la que se almacenará el resultado de la suma.
+     * @param N El número de filas de las matrices.
+     * @param M El número de columnas de las matrices.
+     */
     private void plus(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int M) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
