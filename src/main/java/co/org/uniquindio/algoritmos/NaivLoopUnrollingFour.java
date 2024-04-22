@@ -6,7 +6,7 @@ public class NaivLoopUnrollingFour {
             for (i = 0; i < N; i++) {
                 for (j = 0; j < M; j++) {
                     aux = 0.0;
-                    for (k = 0; k < P; k++) {
+                    for (k = 0; k < P; k+=4) {
                         aux += matrizA[i][k] * matrizB[k][j] + matrizA[i][k+1]*matrizB[k + 1][j]
                                 + matrizA[i][k + 2] * matrizB[k +2][j] + matrizA[i][k + 3] * matrizB[k + 3][j];
                     }
