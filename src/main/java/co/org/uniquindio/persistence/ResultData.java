@@ -1,4 +1,4 @@
-package persistence;
+package co.org.uniquindio.persistence;
 
 public class ResultData {
     private int size;

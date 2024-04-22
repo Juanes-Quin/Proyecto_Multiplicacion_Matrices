@@ -1,5 +1,7 @@
+package co.org.uniquindio.algoritmos;
+
 public class NaivLoopUnrollingFour {
-    public void algNaivLoopUnrollingFour(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M ) {
+    public static void algNaivLoopUnrollingFour(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int i, j, k;
         double aux;
         if (P % 4 == 0) {
@@ -54,5 +56,13 @@ public class NaivLoopUnrollingFour {
                 }
             }
         }
+    }
+
+    public static void multiply(double[][] matrizA, double[][] matrizB) {
+        int N = matrizA.length;
+        int P = matrizB.length;
+        int M = matrizB[0].length;
+        double[][] matrizRes = new double[N][M];
+        algNaivLoopUnrollingFour(matrizA, matrizB, matrizRes, N, P, M);
     }
 }

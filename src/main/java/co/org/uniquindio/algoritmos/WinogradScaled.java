@@ -1,5 +1,7 @@
+package co.org.uniquindio.algoritmos;
+
 public class WinogradScaled {
-    public void algWinogradScaled(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int P, int M ) {
+    public static void algWinogradScaled(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int i, j;
         double[][] copyA = new double[N][P];
         double[][] copyB = new double[P][M];
@@ -15,7 +17,7 @@ public class WinogradScaled {
 
     }
 
-    private void algWinogradOriginal(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
+    private static void algWinogradOriginal(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int i, j, k;
         double aux;
         int upsilon = P % 2;
@@ -69,7 +71,7 @@ public class WinogradScaled {
 
     }
 
-    private void multiplyWithScalar(double[][] matrizA, double[][] matrizB, int N, int M, double scalar) {
+    private static void multiplyWithScalar(double[][] matrizA, double[][] matrizB, int N, int M, double scalar) {
         int i , j;
         for(i = 0; i < N; i++) {
             for (j = 0; j < M; j++) {
@@ -78,7 +80,7 @@ public class WinogradScaled {
         }
     }
 
-    private double normInf(double[][] matrizA, int N, int M) {
+    private static double normInf(double[][] matrizA, int N, int M) {
         int i, j;
         double max = Double.NEGATIVE_INFINITY;
         for(i = 0; i < N; i++) {
@@ -91,5 +93,13 @@ public class WinogradScaled {
             }
         }
         return max;
+    }
+
+    public static void multiply(double[][] matrizA, double[][] matrizB) {
+        int N = matrizA.length;
+        int P = matrizB.length;
+        int M = matrizB[0].length;
+        double[][] matrizRes = new double[N][M];
+        algWinogradScaled(matrizA, matrizB, matrizRes, N, P, M);
     }
 }

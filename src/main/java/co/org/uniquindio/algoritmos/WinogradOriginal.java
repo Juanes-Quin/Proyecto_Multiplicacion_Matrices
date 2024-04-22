@@ -1,5 +1,7 @@
+package co.org.uniquindio.algoritmos;
+
 public class WinogradOriginal {
-    public void algWinogradOriginal(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int P, int M ) {
+    public static void algWinogradOriginal(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int i, j, k;
         double aux;
         int upsilon = P % 2;
@@ -47,5 +49,13 @@ public class WinogradOriginal {
         // Liberar el espacio de la memoria
         y = null;
         z = null;
+    }
+
+    public static void multiply(double[][] matrizA, double[][] matrizB) {
+        int N = matrizA.length;
+        int P = matrizB.length;
+        int M = matrizB[0].length;
+        double[][] matrizRes = new double[N][M];
+        algWinogradOriginal(matrizA, matrizB, matrizRes, N, P, M);
     }
 }

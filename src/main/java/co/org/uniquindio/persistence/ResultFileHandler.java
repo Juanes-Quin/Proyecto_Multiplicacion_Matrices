@@ -1,4 +1,4 @@
-package persistence;
+package co.org.uniquindio.persistence;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,7 +8,7 @@ import java.nio.file.StandardOpenOption;
 
 public class ResultFileHandler {
 
-    private static final String LANGUAGE = "python";
+    private static final String LANGUAGE = "java";
     private static final String DEFAULT_DIRECTORY = "resources/results";
     private static final String FILE_NAME = LANGUAGE + "_results.csv";
     private static final Path filePath = Paths.get(DEFAULT_DIRECTORY, FILE_NAME);
@@ -37,7 +37,7 @@ public class ResultFileHandler {
      */
     public static void saveResult(int size, String algorithm, long executionTime) throws IOException {
         initializeResultFile();
-        String resultLine = String.format("%d,%s,%s,%d %n", size, algorithm, LANGUAGE, executionTime);
+        String resultLine = String.format("%d,%s,%s,%d%n", size, algorithm, LANGUAGE, executionTime);
         Files.write(filePath, resultLine.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND);
     }
 }

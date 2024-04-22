@@ -1,5 +1,7 @@
+package co.org.uniquindio.algoritmos;
+
 public class NaivLoopUnrollingTwo {
-    public void algNaivLoopUnrollingTwo(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
+    public static void algNaivLoopUnrollingTwo(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int i, j, k;
         double aux;
         if (P % 2 == 0 ) {
@@ -23,5 +25,13 @@ public class NaivLoopUnrollingTwo {
                 }
             }
         }
+    }
+
+    public static void multiply(double[][] matrizA, double[][] matrizB) {
+        int N = matrizA.length;
+        int P = matrizB.length;
+        int M = matrizB[0].length;
+        double[][] matrizRes = new double[N][M];
+        algNaivLoopUnrollingTwo(matrizA, matrizB, matrizRes, N, P, M);
     }
 }

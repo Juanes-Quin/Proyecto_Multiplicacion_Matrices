@@ -1,4 +1,4 @@
-package persistence;
+package co.org.uniquindio.persistence;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -6,11 +6,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 public class ResultsManager {
-    private static final String JAVA_RESULTS_PATH = "resources/results/java_result.csv";
-    private static final String PYTHON_RESULTS_PATH = "resources/results/python_result.csv";
+    private static final String JAVA_RESULTS_PATH = "resources/results/java_results.csv";
+    private static final String PYTHON_RESULTS_PATH = "resources/results/python_results.csv";
 
     public static List<ResultData> getCombinedResults() throws IOException {
         List<ResultData> javaResults = readResults(JAVA_RESULTS_PATH, "Java");
@@ -30,7 +30,7 @@ public class ResultsManager {
                             Integer.parseInt(tokens[0]),
                             tokens[1],
                             language,
-                            Long.parseLong(tokens[2])
+                            Long.parseLong(tokens[3])
                     ))
                     .toList();
         }

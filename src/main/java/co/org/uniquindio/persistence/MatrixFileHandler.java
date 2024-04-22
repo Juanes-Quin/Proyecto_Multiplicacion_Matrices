@@ -1,4 +1,4 @@
-package persistence;
+package co.org.uniquindio.persistence;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

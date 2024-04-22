@@ -1,11 +1,19 @@
-import persistence.MatrixFileHandler;
-import persistence.ResultData;
-import persistence.ResultFileHandler;
-import persistence.ResultsManager;
+package co.org.uniquindio;
 
+import co.org.uniquindio.algoritmos.*;
+import co.org.uniquindio.persistence.*;
+import co.org.uniquindio.views.ResultsViewer;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
+import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -13,160 +21,37 @@ public class Main {
         int minDigits = 6;
         int[] sizes = {8, 16, 32, 64, 128, 256, 512, 1024};
 
-        // Probar cada algoritmo con cada tamaño de matriz
-        for (int size : sizes) {
-            // Generar matrices
-            double[][] matrixA = matrixGenerator(size, minDigits);
-            double[][] matrixB = matrixGenerator(size, minDigits);
-
-            // Guardar matrices
-            saveMatrix(matrixA, "matrix_A_" + size + "x" + size + ".csv");
-            saveMatrix(matrixB, "matrix_B_" + size + "x" + size + ".csv");
-
-            // Cargar las matrices para el tamaño actual
-            matrixA = loadMatrix("matrix_A_" + size + "x" + size + ".csv");
-            matrixB = loadMatrix("matrix_B_" + size + "x" + size + ".csv");
-
-            // Ejecutar y mostrar resultados del algoritmo NaivOnArray
-            long startTime = System.nanoTime();
-            NaivOnArray naiveOnArray = new NaivOnArray();
-            naiveOnArray.algNaivOnArray(matrixA, matrixB,new double[size][size],size, size, size);
-            long endTime = System.nanoTime();
-            long executionTime = endTime - startTime;
-
-            // Guardar el resultado en el archivo CSV
-            saveResult(size, "NaivOnArray", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo NaivLoopUnrollingTwo
-            startTime = System.nanoTime();
-            NaivLoopUnrollingTwo naivLoopUnrollingTwo = new NaivLoopUnrollingTwo();
-            naivLoopUnrollingTwo.algNaivLoopUnrollingTwo(matrixA, matrixB,new double[size][size],size, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "NaivLoopUnrollingTwo", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo NaivLoopUnrollingFour
-            startTime = System.nanoTime();
-            NaivLoopUnrollingFour naivLoopUnrollingFour = new NaivLoopUnrollingFour();
-            naivLoopUnrollingFour.algNaivLoopUnrollingFour(matrixA, matrixB,new double[size][size],size, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "NaivLoopUnrollingFour", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo WinogradOriginal
-            startTime = System.nanoTime();
-            WinogradOriginal winogradOriginal = new WinogradOriginal();
-            winogradOriginal.algWinogradOriginal(matrixA, matrixB,new double[size][size],size, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "WinogradOriginal", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo WinogradScaled
-            startTime = System.nanoTime();
-            WinogradScaled winogradScaled = new WinogradScaled();
-            winogradScaled.algWinogradScaled(matrixA, matrixB,new double[size][size],size, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "WinogradScaled", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo StrassenNaiv
-            startTime = System.nanoTime();
-            StrassenNaiv strassenNaiv = new StrassenNaiv();
-            strassenNaiv.algStrassenNaiv(matrixA, matrixB,new double[size][size],size, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "StrassenNaiv", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo StrassenWinograd
-            startTime = System.nanoTime();
-            StrassenWinograd strassenWinograd = new StrassenWinograd();
-            strassenWinograd.algStrassenWinograd(matrixA, matrixB,new double[size][size],size, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "StrassenWinograd", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo III 3 SequentialBlock
-            startTime = System.nanoTime();
-            III_3_Sequential_Block iii_3_sequential_block = new III_3_Sequential_Block();
-            iii_3_sequential_block.alg_III_3_SequentialBlock(matrixA, matrixB, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "III_3_Sequential_Block", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo III 4 ParallelBlock
-            startTime = System.nanoTime();
-            III_4_Parallel_Block iii_4_parallel_block = new III_4_Parallel_Block();
-            iii_4_parallel_block.alg_III_4_Parallel_Block(matrixA, matrixB, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "III_4_Parallel_Block", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo III 5 Enhanced Parallel Block
-            //startTime = System.nanoTime();
-            //III_5_Enhanced_Parallel_Block iii_5_enhanced_parallel_block = new III_5_Enhanced_Parallel_Block();
-            //iii_5_enhanced_parallel_block.alg_III_5_Enhanced_Parallel_Block(matrixA, matrixB, size, size);
-            //endTime = System.nanoTime();
-            //executionTime = endTime - startTime;
-
-            //saveResult(size, "III_5_Enhanced_Parallel_Block", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo IV 3 SequentialBlock
-            startTime = System.nanoTime();
-            IV_3_Sequential_Block iv_3_sequential_block = new IV_3_Sequential_Block();
-            iv_3_sequential_block.alg_IV_3_Sequential_Block(matrixA, matrixB, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "IV_3_Sequential_Block", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo IV 4 ParallelBlock
-            startTime = System.nanoTime();
-            IV_4_Parallel_Block iv_4_parallel_block = new IV_4_Parallel_Block();
-            iv_4_parallel_block.alg_IV_4_Parallel_Block(matrixA, matrixB, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "IV_4_Parallel_Block", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo IV 5 Enhanced Parallel Block
-            //startTime = System.nanoTime();
-            //IV_5_Enhanced_Parallel_Block iv_5_enhanced_parallel_block = new IV_5_Enhanced_Parallel_Block();
-            //iv_5_enhanced_parallel_block.alg_IV_5_Enhanced_Parallel_Block(matrixA, matrixB, size, size);
-            //endTime = System.nanoTime();
-            //executionTime = endTime - startTime;
-
-            //saveResult(size, "IV_5_Enhanced_Parallel_Block", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo V 3 SequentialBlock
-            startTime = System.nanoTime();
-            V_3_Sequential_Block v_3_sequential_block = new V_3_Sequential_Block();
-            v_3_sequential_block.alg_V_3_Sequential_Block(matrixA, matrixB, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "V_3_Sequential_Block", executionTime);
-
-            // Ejecutar y mostrar resultados del algoritmo V 4 ParallelBlock
-            startTime = System.nanoTime();
-            V_4_Parallel_Block v_4_parallel_block = new V_4_Parallel_Block();
-            v_4_parallel_block.alg_V_4_ParallelBlockTres(matrixA, matrixB, size, size);
-            endTime = System.nanoTime();
-            executionTime = endTime - startTime;
-
-            saveResult(size, "V_4_Parallel_Block", executionTime);
-
-        }
+//        // Probar cada algoritmo con cada tamaño de matriz
+//        for (int size : sizes) {
+////            // Generar matrices
+////            double[][] matrixA = matrixGenerator(size, minDigits);
+////            double[][] matrixB = matrixGenerator(size, minDigits);
+////
+////            // Guardar matrices
+////            saveMatrix(matrixA, "matrix_A_" + size + "x" + size + ".csv");
+////            saveMatrix(matrixB, "matrix_B_" + size + "x" + size + ".csv");
+//
+//            processAlgorithm(size, "NaivOnArray", NaivOnArray::multiply);
+//            processAlgorithm(size, "NaivLoopUnrollingTwo", NaivLoopUnrollingTwo::multiply);
+//            processAlgorithm(size, "NaivLoopUnrollingFour", NaivLoopUnrollingFour::multiply);
+//            processAlgorithm(size, "WinogradOriginal", WinogradOriginal::multiply);
+//            processAlgorithm(size, "WinogradScaled", WinogradScaled::multiply);
+//            processAlgorithm(size, "StrassenNaiv", StrassenNaiv::multiply);
+//            processAlgorithm(size, "StrassenWinograd", StrassenWinograd::multiply);
+//            processAlgorithm(size, "III_3_Sequential_Block", III_3_Sequential_Block::multiply);
+//            processAlgorithm(size, "III_4_Parallel_Block", III_4_Parallel_Block::multiply);
+//            processAlgorithm(size, "IV_3_Sequential_Block", IV_3_Sequential_Block::multiply);
+//            processAlgorithm(size, "IV_4_Parallel_Block", IV_4_Parallel_Block::multiply);
+//            processAlgorithm(size, "V_3_Sequential_Block", V_3_Sequential_Block::multiply);
+//            processAlgorithm(size, "V_4_Parallel_Block", V_4_Parallel_Block::multiply);
+//
+//        }
 
         // Cargar los resultados combinados
         List<ResultData> results = loadCombinedResults();
+
+        // Mostrar el gráfico con los resultados
+        displayChart(results);
 
     }
 
@@ -188,6 +73,22 @@ public class Main {
         return matrix;
     }
 
+    private static void processAlgorithm(int size, String algorithmName, BiConsumer<double[][], double[][]> algorithmExecutor) throws IOException {
+        // Cargar las matrices para el tamaño actual
+        double[][] matrixA = loadMatrix("matrix_A_" + size + "x" + size + ".csv");
+        double[][] matrixB = loadMatrix("matrix_B_" + size + "x" + size + ".csv");
+
+        // Ejecutar algoritmo
+        long startTime = System.nanoTime();
+        algorithmExecutor.accept(matrixA, matrixB);
+        long endTime = System.nanoTime();
+        long executionTime = endTime - startTime;
+
+        // Guardar el resultado en el archivo CSV
+        saveResult(size, algorithmName, executionTime);
+    }
+
+
     public static void saveMatrix(double[][] matrix, String filename) throws IOException {
         MatrixFileHandler.saveMatrix(matrix, filename);
     }
@@ -201,28 +102,10 @@ public class Main {
     }
 
     public static void displayChart(List<ResultData> results) {
-        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        // Añadir datos de Java y Python al dataset
-        for (ResultData data : results) {
-            dataset.addValue(data.getExecutionTime(), data.getLanguage(), data.getAlgorithm() + " " + data.getSize());
-        }
-
-        JFreeChart barChart = ChartFactory.createBarChart(
-                "Comparación de Tiempos de Ejecución",
-                "Algoritmo y Tamaño",
-                "Tiempo (Nanosegundos)",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,   // include legend
-                true,
-                false);
-
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        JFrame frame = new JFrame();
-        frame.setContentPane(chartPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        SwingUtilities.invokeLater(() -> {
+            ResultsViewer viewer = new ResultsViewer(results);
+            viewer.setVisible(true);
+        });
     }
+
 }

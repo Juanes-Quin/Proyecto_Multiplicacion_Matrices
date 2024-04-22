@@ -1,5 +1,7 @@
+package co.org.uniquindio.algoritmos;
+
 public class StrassenNaiv {
-    public void algStrassenNaiv(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
+    public static void algStrassenNaiv(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int maxSize, k, m, newSize, i, j;
         maxSize = max(N,P);
 
@@ -45,7 +47,7 @@ public class StrassenNaiv {
         }
     }
 
-    private void strassenNaivStep(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int m) {
+    private static void strassenNaivStep(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int m) {
         int i, j, newSize;
 
         if ((N % 2 == 0) && (N > m)) {
@@ -243,7 +245,7 @@ public class StrassenNaiv {
         }
     }
 
-    private void algoritmoNaivStandard(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
+    private static void algoritmoNaivStandard(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         double aux;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -256,7 +258,7 @@ public class StrassenNaiv {
         }
     }
 
-    private int max(int N, int P) {
+    private static int max(int N, int P) {
         if (N < P) {
             return P;
         } else {
@@ -264,7 +266,7 @@ public class StrassenNaiv {
         }
     }
 
-    private void minus(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int M) {
+    private static void minus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
         for (int i =0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 matrizRes[i][j] = matrizA[i][j] - matrizB[i][j];
@@ -272,11 +274,19 @@ public class StrassenNaiv {
         }
     }
 
-    private void plus(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int M) {
+    private static void plus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 matrizRes[i][j] = matrizA[i][j] + matrizB[i][j];
             }
         }
+    }
+
+    public static void multiply(double[][] matrizA, double[][] matrizB) {
+        int N = matrizA.length;
+        int P = matrizB.length;
+        int M = matrizB[0].length;
+        double[][] matrizRes = new double[N][M];
+        algStrassenNaiv(matrizA, matrizB, matrizRes, N, P, M);
     }
 }

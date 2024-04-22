@@ -1,6 +1,8 @@
+package co.org.uniquindio.algoritmos;
+
 public class StrassenWinograd {
 
-    public void algStrassenWinograd(double [][] matrizA, double [][] matrizB, double [][] matrizRes, int N, int P, int M) {
+    public static void algStrassenWinograd(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int maxSize, valorK, valorM,  newSize, i, j;
         maxSize = max(N,P);
         maxSize = max(maxSize,M);
@@ -51,7 +53,7 @@ public class StrassenWinograd {
 
     }
 
-    private void strassenWinogradStep(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int valorM) {
+    private static void strassenWinogradStep(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int valorM) {
         int i , j, newSize;
 
         if ((N % 2 == 0) && (N > valorM)) {
@@ -271,7 +273,7 @@ public class StrassenWinograd {
         }
     }
 
-    private void plus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
+    private static void plus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
         for (int i = 0; i < N;i++) {
             for (int j = 0; j < M; j++) {
                 matrizRes[i][j] = matrizA[i][j] + matrizB[i][j];
@@ -279,14 +281,14 @@ public class StrassenWinograd {
         }
     }
 
-    private void minus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
+    private static void minus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 matrizRes[i][j] = matrizA[i][j] - matrizB[i][j];
             }
         }
     }
-    public int max (int N, int P){
+    public static int max (int N, int P){
         if (N < P){
             return P;
         } else {
@@ -295,7 +297,13 @@ public class StrassenWinograd {
 
     }
 
-
+    public static void multiply(double[][] matrizA, double[][] matrizB) {
+        int N = matrizA.length;
+        int P = matrizB.length;
+        int M = matrizB[0].length;
+        double[][] matrizRes = new double[N][M];
+        algStrassenWinograd(matrizA, matrizB, matrizRes, N, P, M);
+    }
 }
 
 

@@ -1,7 +1,9 @@
+package co.org.uniquindio.algoritmos;
+
 import java.util.stream.IntStream;
 
 public class V_4_Parallel_Block {
-    public void alg_V_4_ParallelBlockTres(double[][] matrizA, double[][] matrizB, int size1, int size2) {
+    public static void alg_V_4_ParallelBlockTres(double[][] matrizA, double[][] matrizB, int size1, int size2) {
         double[][] matrizC = new double[size1][size1];
         IntStream.range(0, 1).parallel().forEach(_i -> {
             for (int i1 = 0; i1 < size1; i1 += size2) {
@@ -18,5 +20,11 @@ public class V_4_Parallel_Block {
                 }
             }
         });
+    }
+
+    public static void multiply(double[][] matrizA, double[][] matrizB) {
+        int N = matrizA.length;
+        int P = matrizB.length;
+        alg_V_4_ParallelBlockTres(matrizA, matrizB, N, P);
     }
 }
