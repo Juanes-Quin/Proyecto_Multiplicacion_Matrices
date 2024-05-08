@@ -28,8 +28,7 @@ public class ResultsViewer extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
 
-        groupedResults = results.stream()
-                .collect(Collectors.groupingBy(ResultData::getSize));
+        groupedResults = results.stream().collect(Collectors.groupingBy(ResultData::getSize));
 
         List<Integer> sortedSizes = new ArrayList<>(groupedResults.keySet());
         Collections.sort(sortedSizes); // Asegurar que los tamaños estén ordenados
@@ -69,8 +68,8 @@ public class ResultsViewer extends JFrame {
                                     Collectors.averagingDouble(ResultData::getExecutionTime)));
 
                     // Añadir Java y Python para cada algoritmo, convertidos a milisegundos
-                    dataset.addValue(languageTimes.getOrDefault("Java", 0.0) / 1_000_000.0, "Java", algorithm);
-                    dataset.addValue(languageTimes.getOrDefault("Python", 0.0) / 1_000_000.0, "Python", algorithm);
+                    dataset.addValue(languageTimes.getOrDefault("java", 0.0) / 1_000_000.0, "Java", algorithm);
+                    dataset.addValue(languageTimes.getOrDefault("python", 0.0) / 1_000_000.0, "Python", algorithm);
                 });
 
         JFreeChart chart = ChartFactory.createBarChart(
