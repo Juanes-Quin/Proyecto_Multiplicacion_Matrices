@@ -2,7 +2,7 @@ package co.org.uniquindio.algoritmos;
 
 public class WinogradScaled {
     public static void algWinogradScaled(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
-        int i, j;
+
         double[][] copyA = new double[N][P];
         double[][] copyB = new double[P][M];
 

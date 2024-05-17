@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ResultFileHandler {
 
-    private static final String LANGUAGE = "python";
+    private static final String LANGUAGE = "java";
     private static final String DEFAULT_DIRECTORY = "src/main/resources/results";
     private static final String FILE_NAME = LANGUAGE + "_results.xml";
     private static final Path filePath = Paths.get(DEFAULT_DIRECTORY, FILE_NAME);

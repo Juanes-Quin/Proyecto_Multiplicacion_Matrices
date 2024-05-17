@@ -22,7 +22,6 @@ public class III_3_Sequential_Block {
     public static void multiply(double[][] matrizA, double[][] matrizB) {
         int N = matrizA.length;
         int P = matrizB.length;
-        int M = matrizB[0].length;
         alg_III_3_SequentialBlock(matrizA, matrizB, N, P);
     }
 }

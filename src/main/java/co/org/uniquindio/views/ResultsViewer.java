@@ -4,6 +4,7 @@ import co.org.uniquindio.persistence.ResultData;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
@@ -99,6 +100,9 @@ public class ResultsViewer extends JFrame {
 
         // Ajustar el margen entre grupos de barras para separar más los grupos
         plot.getDomainAxis().setCategoryMargin(0.30);  // Incrementa el espacio entre grupos de categorías
+
+        // Ajustar la inclinación de los nombres de los algoritmos
+        plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
 
         // Configurar colores específicos para las series
         renderer.setSeriesPaint(plot.getDataset().getRowIndex("Java"), Color.RED);
