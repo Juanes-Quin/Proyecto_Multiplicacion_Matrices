@@ -11,10 +11,10 @@ import java.util.function.BiConsumer;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        int minDigits = 6;
-        int[] sizes = {8, 16, 32, 64, 128, 256, 512, 1024};
+        int minDigits = 7;
+        int[] sizes = {32, 64, 128, 256, 512, 1024, 2048, 4096};
 
-//        // Probar cada algoritmo con cada tamaño de matriz
+        // Probar cada algoritmo con cada tamaño de matriz
 //        for (int size : sizes) {
 ////            // Generar matrices
 ////            double[][] matrixA = matrixGenerator(size, minDigits);
@@ -57,11 +57,12 @@ public class Main {
     public static double[][] matrixGenerator(int n,int minDigits){
         Random rand = new Random();
         double[][] matrix = new double[n][n];
+        int minVal = (int) Math.pow(10, (minDigits - 1));
         int maxVal = (int) Math.pow(10, minDigits) - 1;
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                matrix[i][j] = 1 + rand.nextInt(maxVal);
+                matrix[i][j] = 1 + rand.nextInt(minVal,maxVal);
             }
         }
 

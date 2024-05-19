@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
 from tkinter import ttk
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 
 class ResultsViewer(tk.Tk):
     def __init__(self, results):
@@ -22,6 +22,13 @@ class ResultsViewer(tk.Tk):
         self.size_selector.pack(side=tk.LEFT, padx=10)
         self.size_selector.bind("<<ComboboxSelected>>", self.update_chart)
 
+        # Selector de lenguaje
+        tk.Label(controls_panel, text="Seleccione el lenguaje:", font=('Helvetica', 10)).pack(side=tk.LEFT)
+        self.language_selector = ttk.Combobox(controls_panel, values=["Ambos", "Java", "Python"], state="readonly")
+        self.language_selector.pack(side=tk.LEFT, padx=10)
+        self.language_selector.set("Ambos")
+        self.language_selector.bind("<<ComboboxSelected>>", self.update_chart)
+
         # Configurar el panel de matplotlib
         self.fig, self.ax = plt.subplots()
         self.canvas = FigureCanvasTkAgg(self.fig, self)  # Area de dibujo de Tk
@@ -35,10 +42,13 @@ class ResultsViewer(tk.Tk):
         grouped = defaultdict(list)
         for result in results:
             grouped[result.size].append(result)
-        return grouped
+        ordered_grouped = OrderedDict(sorted(grouped.items()))
+        return ordered_grouped
+
 
     def update_chart(self, event=None):
         size = int(self.size_selector.get())
+        language = self.language_selector.get().lower()
         results_for_size = self.results.get(size, [])
         self.ax.clear()  # Limpiar gráficos anteriores por si algo
 
@@ -53,8 +63,10 @@ class ResultsViewer(tk.Tk):
         bar_width = 0.35
         x = range(len(algorithms))
 
-        self.ax.bar(x, java_times, width=bar_width, label='Java', color='red')
-        self.ax.bar([p + bar_width for p in x], python_times, width=bar_width, label='Python', color='blue')
+        if language in ['ambos', 'java']:
+            self.ax.bar(x, java_times, width=bar_width, label='Java', color='red')
+        if language in ['ambos', 'python']:
+            self.ax.bar([p + bar_width for p in x], python_times, width=bar_width, label='Python', color='blue')
 
         self.ax.set_xlabel('Algoritmos')
         self.ax.set_ylabel('Tiempo (Milisegundos)')

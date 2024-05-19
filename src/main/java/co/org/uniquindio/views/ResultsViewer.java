@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
 
 public class ResultsViewer extends JFrame {
     private int currentMatrixSize; // Tamaño actual de la matriz visualizada
+    private String currentLanguage = "Ambos"; // Lenguaje actual visualizado
     private Map<Integer, List<ResultData>> groupedResults;
     private ChartPanel chartPanel;
 
@@ -44,12 +45,23 @@ public class ResultsViewer extends JFrame {
             }
         });
 
+        JComboBox<String> languageSelector = new JComboBox<>(new String[]{"Ambos", "Java", "Python"});
+        languageSelector.addActionListener(e -> {
+            String selectedLanguage = (String) languageSelector.getSelectedItem();
+            if (selectedLanguage != null) {
+                currentLanguage = selectedLanguage;
+                updateChart();
+            }
+        });
+
         chartPanel = new ChartPanel(null);
         add(chartPanel, BorderLayout.CENTER);
 
         JPanel controlsPanel = new JPanel();
         controlsPanel.add(new JLabel("Seleccione el tamaño de la matriz:"));
         controlsPanel.add(sizeSelector);
+        controlsPanel.add(new JLabel("Seleccione el lenguaje:"));
+        controlsPanel.add(languageSelector);
 
         add(controlsPanel, BorderLayout.NORTH);
 
@@ -68,9 +80,12 @@ public class ResultsViewer extends JFrame {
                             .collect(Collectors.groupingBy(ResultData::getLanguage,
                                     Collectors.averagingDouble(ResultData::getExecutionTime)));
 
-                    // Añadir Java y Python para cada algoritmo, convertidos a milisegundos
-                    dataset.addValue(languageTimes.getOrDefault("java", 0.0) / 1_000_000.0, "Java", algorithm);
-                    dataset.addValue(languageTimes.getOrDefault("python", 0.0) / 1_000_000.0, "Python", algorithm);
+                    if (currentLanguage.equals("Ambos") || currentLanguage.equals("Java")) {
+                        dataset.addValue(languageTimes.getOrDefault("java", 0.0) / 1_000_000.0, "Java", algorithm);
+                    }
+                    if (currentLanguage.equals("Ambos") || currentLanguage.equals("Python")) {
+                        dataset.addValue(languageTimes.getOrDefault("python", 0.0) / 1_000_000.0, "Python", algorithm);
+                    }
                 });
 
         JFreeChart chart = ChartFactory.createBarChart(
@@ -104,20 +119,21 @@ public class ResultsViewer extends JFrame {
         // Ajustar la inclinación de los nombres de los algoritmos
         plot.getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.UP_45);
 
-        // Configurar colores específicos para las series
-        renderer.setSeriesPaint(plot.getDataset().getRowIndex("Java"), Color.RED);
-        renderer.setSeriesPaint(plot.getDataset().getRowIndex("Python"), Color.BLUE);
-
         chartPanel.setChart(chart);
     }
-
 
     private void configureChartColors(JFreeChart chart, DefaultCategoryDataset dataset) {
         CategoryItemRenderer renderer = chart.getCategoryPlot().getRenderer();
 
-        renderer.setSeriesPaint(dataset.getRowIndex("Java"), Color.RED);
-        renderer.setSeriesPaint(dataset.getRowIndex("Python"), Color.BLUE);
-    }
+        int javaIndex = dataset.getRowIndex("Java");
+        if (javaIndex >= 0) {
+            renderer.setSeriesPaint(javaIndex, Color.RED);
+        }
 
+        int pythonIndex = dataset.getRowIndex("Python");
+        if (pythonIndex >= 0) {
+            renderer.setSeriesPaint(pythonIndex, Color.BLUE);
+        }
+    }
 
 }
