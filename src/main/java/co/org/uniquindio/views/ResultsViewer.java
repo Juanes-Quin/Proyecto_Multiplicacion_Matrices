@@ -18,12 +18,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Esta clase proporciona una interfaz gráfica para visualizar los resultados de la ejecución de algoritmos.
+ * Utiliza JFreeChart para generar gráficos de barras comparativos.
+ *  @autor Marlon Stiven Espinosa Joaqui
+ *  @autor Juan Esteban Quintero Rodriguez
+ *  @autor Jesus Santiago Ramon Ramos
+ */
 public class ResultsViewer extends JFrame {
     private int currentMatrixSize; // Tamaño actual de la matriz visualizada
     private String currentLanguage = "Ambos"; // Lenguaje actual visualizado
     private Map<Integer, List<ResultData>> groupedResults;
     private ChartPanel chartPanel;
 
+    /**
+     * Constructor que inicializa la vista de resultados con una lista de resultados.
+     * @param results La lista de resultados a visualizar.
+     */
     public ResultsViewer(List<ResultData> results) {
         super("Resultados de Algoritmos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,6 +79,9 @@ public class ResultsViewer extends JFrame {
         updateChart(); // Cargar el gráfico inicial
     }
 
+    /**
+     * Actualiza el gráfico de barras basado en el tamaño de la matriz y el lenguaje seleccionados.
+     */
     private void updateChart() {
         List<ResultData> resultsForSize = groupedResults.getOrDefault(currentMatrixSize, Collections.emptyList());
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -103,6 +117,10 @@ public class ResultsViewer extends JFrame {
         chartPanel.setChart(chart);
     }
 
+    /**
+     * Configura la apariencia del gráfico, incluyendo el ancho de las barras y la inclinación de las etiquetas.
+     * @param chart El gráfico a configurar.
+     */
     private void configureChart(JFreeChart chart) {
         CategoryPlot plot = chart.getCategoryPlot();
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
@@ -122,6 +140,11 @@ public class ResultsViewer extends JFrame {
         chartPanel.setChart(chart);
     }
 
+    /**
+     * Configura los colores del gráfico, asignando rojo para Java y azul para Python.
+     * @param chart El gráfico a configurar.
+     * @param dataset El conjunto de datos del gráfico.
+     */
     private void configureChartColors(JFreeChart chart, DefaultCategoryDataset dataset) {
         CategoryItemRenderer renderer = chart.getCategoryPlot().getRenderer();
 
@@ -135,5 +158,4 @@ public class ResultsViewer extends JFrame {
             renderer.setSeriesPaint(pythonIndex, Color.BLUE);
         }
     }
-
 }

@@ -1,21 +1,37 @@
 package co.org.uniquindio.algoritmos;
 
+/**
+ * Esta clase contiene métodos para multiplicar matrices utilizando el algoritmo de Strassen-Winograd.
+ * Este enfoque optimiza la multiplicación de matrices para matrices grandes, combinando las técnicas de Strassen y Winograd.
+ *  @autor Marlon Stiven Espinosa Joaqui
+ *  @autor Juan Esteban Quintero Rodriguez
+ *  @autor Jesus Santiago Ramon Ramos
+ */
 public class StrassenWinograd {
 
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando el algoritmo de Strassen-Winograd.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz resultado de la multiplicación.
+     * @param N La dimensión de las filas de la matriz A.
+     * @param P La dimensión de las columnas de la matriz A y filas de la matriz B.
+     * @param M La dimensión de las columnas de la matriz B.
+     */
     public static void algStrassenWinograd(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
-        int maxSize, valorK, valorM,  newSize, i, j;
-        maxSize = max(N,P);
-        maxSize = max(maxSize,M);
+        int maxSize, valorK, valorM, newSize, i, j;
+        maxSize = max(N, P);
+        maxSize = max(maxSize, M);
         if (maxSize < 16) {
             maxSize = 16; // Con otro valor no es posible hallar k
         }
-        valorK = (int) Math.floor(Math.log(maxSize)/Math.log(2) -4);
-        valorM = (int) Math.floor(maxSize * Math.pow(2, -valorK) +1);
-        newSize = valorM * (int) Math.pow(2 , valorK);
+        valorK = (int) Math.floor(Math.log(maxSize) / Math.log(2) - 4);
+        valorM = (int) Math.floor(maxSize * Math.pow(2, -valorK) + 1);
+        newSize = valorM * (int) Math.pow(2, valorK);
 
-        double [][] newA = new double[newSize][];
-        double [][] newB = new double[newSize][];
-        double [][] auxResultado = new double[newSize][];
+        double[][] newA = new double[newSize][];
+        double[][] newB = new double[newSize][];
+        double[][] auxResultado = new double[newSize][];
         for (i = 0; i < newSize; i++) {
             newA[i] = new double[newSize];
             newB[i] = new double[newSize];
@@ -41,7 +57,7 @@ public class StrassenWinograd {
             }
         }
 
-        // llamado al metodo
+        // Llamado al método
         strassenWinogradStep(newA, newB, auxResultado, newSize, valorM);
 
         // Ciclos para extraer el resultado
@@ -50,11 +66,18 @@ public class StrassenWinograd {
                 matrizRes[i][j] = auxResultado[i][j];
             }
         }
-
     }
 
+    /**
+     * Este método realiza un paso del algoritmo de Strassen-Winograd.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz resultado de la multiplicación.
+     * @param N La dimensión de la matriz.
+     * @param valorM El tamaño mínimo de partición.
+     */
     private static void strassenWinogradStep(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int valorM) {
-        int i , j, newSize;
+        int i, j, newSize;
 
         if ((N % 2 == 0) && (N > valorM)) {
             newSize = N / 2;
@@ -128,7 +151,6 @@ public class StrassenWinograd {
             for (i = 0; i < newSize; i++) {
                 for (j = 0; j < newSize; j++) {
                     varA11[i][j] = matrizA[i][j];
-
                 }
             }
 
@@ -146,7 +168,7 @@ public class StrassenWinograd {
 
             for (i = 0; i < newSize; i++) {
                 for (j = 0; j < newSize; j++) {
-                    varA22[i][j] = matrizA[  newSize + i][newSize + j];
+                    varA22[i][j] = matrizA[newSize + i][newSize + j];
                 }
             }
 
@@ -190,14 +212,13 @@ public class StrassenWinograd {
             plus(aux1, aux3, aux8, newSize, newSize);
             plus(aux8, aux4, aux9, newSize, newSize);
 
-            //
             plus(aux1, aux2, resultadoPart11, newSize, newSize);
             plus(aux9, aux6, resultadoPart12, newSize, newSize);
             plus(aux8, aux5, helper1, newSize, newSize);
             plus(helper1, aux7, resultadoPart21, newSize, newSize);
             plus(aux9, aux5, resultadoPart22, newSize, newSize);
 
-            // ciclos para alamcenar los resultados en la matrizRes[][]
+            // Ciclos para almacenar los resultados en la matrizRes[][]
             for (i = 0; i < newSize; i++) {
                 for (j = 0; j < newSize; j++) {
                     matrizRes[i][j] = resultadoPart11[i][j];
@@ -226,8 +247,7 @@ public class StrassenWinograd {
             varA1 = null;
             varA2 = null;
             varB1 = null;
-            varB1 = null;
-
+            varB2 = null;
 
             varA11 = null;
             varA12 = null;
@@ -254,13 +274,23 @@ public class StrassenWinograd {
             aux5 = null;
             aux6 = null;
             aux7 = null;
+            aux8 = null;
+            aux9 = null;
         } else {
             algoritmoNaivStandard(matrizA, matrizB, matrizRes, N, N, N);
         }
     }
 
-    public static void algoritmoNaivStandard(double[][] matrizA,double[][] matrizB,double[][] matrizRes,int N, int P, int M)
-    {
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando un enfoque naive (directo).
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz resultado de la multiplicación.
+     * @param N La dimensión de las filas de la matriz A.
+     * @param P La dimensión de las columnas de la matriz A y filas de la matriz B.
+     * @param M La dimensión de las columnas de la matriz B.
+     */
+    public static void algoritmoNaivStandard(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         double aux;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -273,14 +303,30 @@ public class StrassenWinograd {
         }
     }
 
+    /**
+     * Este método realiza la suma de dos matrices.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz resultado de la suma.
+     * @param N La dimensión de las filas de las matrices.
+     * @param M La dimensión de las columnas de las matrices.
+     */
     private static void plus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
-        for (int i = 0; i < N;i++) {
+        for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 matrizRes[i][j] = matrizA[i][j] + matrizB[i][j];
             }
         }
     }
 
+    /**
+     * Este método realiza la resta de dos matrices.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz resultado de la resta.
+     * @param N La dimensión de las filas de las matrices.
+     * @param M La dimensión de las columnas de las matrices.
+     */
     private static void minus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -288,15 +334,27 @@ public class StrassenWinograd {
             }
         }
     }
-    public static int max (int N, int P){
-        if (N < P){
+
+    /**
+     * Este método devuelve el valor máximo entre dos enteros.
+     * @param N El primer entero a comparar.
+     * @param P El segundo entero a comparar.
+     * @return El valor máximo entre N y P.
+     */
+    public static int max(int N, int P) {
+        if (N < P) {
             return P;
         } else {
             return N;
         }
-
     }
 
+    /**
+     * Este método es un envoltorio para el método algStrassenWinograd.
+     * Toma dos matrices y las multiplica utilizando el algoritmo de Strassen-Winograd.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     */
     public static void multiply(double[][] matrizA, double[][] matrizB) {
         int N = matrizA.length;
         int P = matrizB.length;
@@ -305,5 +363,3 @@ public class StrassenWinograd {
         algStrassenWinograd(matrizA, matrizB, matrizRes, N, P, M);
     }
 }
-
-

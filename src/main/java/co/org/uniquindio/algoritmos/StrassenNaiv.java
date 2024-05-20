@@ -1,17 +1,36 @@
 package co.org.uniquindio.algoritmos;
 
+/**
+ * Esta clase contiene métodos para multiplicar matrices utilizando el algoritmo de Strassen
+ * con una implementación naive (directa).
+ * Este enfoque mejora la eficiencia de la multiplicación de matrices para matrices grandes.
+ *  @autor Marlon Stiven Espinosa Joaqui
+ *  @autor Juan Esteban Quintero Rodriguez
+ *  @autor Jesus Santiago Ramon Ramos
+ */
 public class StrassenNaiv {
+
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando el algoritmo de Strassen
+     * con una implementación naive (directa).
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz resultado de la multiplicación.
+     * @param N La dimensión de las filas de la matriz A.
+     * @param P La dimensión de las columnas de la matriz A y filas de la matriz B.
+     * @param M La dimensión de las columnas de la matriz B.
+     */
     public static void algStrassenNaiv(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         int maxSize, k, m, newSize, i, j;
-        maxSize = max(N,P);
+        maxSize = max(N, P);
 
         if (maxSize < 16) {
             maxSize = 16; // De forma contraria no es posible calcular el valor de k
         }
-        k = (int) Math.floor(Math.log(maxSize)/Math.log(2)) -4;
-        m = (int) Math.floor(maxSize * Math.pow(2,-k)) +1;
+        k = (int) Math.floor(Math.log(maxSize) / Math.log(2)) - 4;
+        m = (int) Math.floor(maxSize * Math.pow(2, -k)) + 1;
 
-        newSize = m * (int) Math.pow(2,k);
+        newSize = m * (int) Math.pow(2, k);
 
         double[][] newA = new double[newSize][];
         double[][] newB = new double[newSize][];
@@ -47,6 +66,14 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método realiza un paso del algoritmo de Strassen con una implementación naive (directa).
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz resultado de la multiplicación.
+     * @param N La dimensión de la matriz.
+     * @param m El tamaño mínimo de partición.
+     */
     private static void strassenNaivStep(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int m) {
         int i, j, newSize;
 
@@ -157,7 +184,7 @@ public class StrassenNaiv {
             strassenNaivStep(helper1, helper2, aux1, newSize, m);
 
             plus(varA21, varA22, helper1, newSize, newSize);
-            strassenNaivStep(helper1, varB11,aux2, newSize, m);
+            strassenNaivStep(helper1, varB11, aux2, newSize, m);
 
             minus(varB12, varB22, helper1, newSize, newSize);
             strassenNaivStep(varA11, helper1, aux3, newSize, m);
@@ -201,14 +228,14 @@ public class StrassenNaiv {
                 }
             }
 
-            for( i = 0; i < newSize; i++){
-                for( j = 0; j < newSize; j++){
+            for (i = 0; i < newSize; i++) {
+                for (j = 0; j < newSize; j++) {
                     matrizRes[newSize + i][j] = resultadoPart21[i][j];
                 }
             }
 
-            for( i = 0; i < newSize; i++){
-                for( j = 0; j < newSize; j++){
+            for (i = 0; i < newSize; i++) {
+                for (j = 0; j < newSize; j++) {
                     matrizRes[newSize + i][newSize + j] = resultadoPart22[i][j];
                 }
             }
@@ -245,6 +272,15 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando un enfoque naive (directo).
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param matrizRes La matriz resultado de la multiplicación.
+     * @param N La dimensión de las filas de la matriz A.
+     * @param P La dimensión de las columnas de la matriz A y filas de la matriz B.
+     * @param M La dimensión de las columnas de la matriz B.
+     */
     private static void algoritmoNaivStandard(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int P, int M) {
         double aux;
         for (int i = 0; i < N; i++) {
@@ -258,6 +294,12 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método devuelve el valor máximo entre dos enteros.
+     * @param N El primer entero a comparar.
+     * @param P El segundo entero a comparar.
+     * @return El valor máximo entre N y P.
+     */
     private static int max(int N, int P) {
         if (N < P) {
             return P;
@@ -266,14 +308,30 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método realiza la resta de dos matrices.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz resultado de la resta.
+     * @param N La dimensión de las filas de las matrices.
+     * @param M La dimensión de las columnas de las matrices.
+     */
     private static void minus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
-        for (int i =0; i < N; i++) {
+        for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 matrizRes[i][j] = matrizA[i][j] - matrizB[i][j];
             }
         }
     }
 
+    /**
+     * Este método realiza la suma de dos matrices.
+     * @param matrizA La primera matriz.
+     * @param matrizB La segunda matriz.
+     * @param matrizRes La matriz resultado de la suma.
+     * @param N La dimensión de las filas de las matrices.
+     * @param M La dimensión de las columnas de las matrices.
+     */
     private static void plus(double[][] matrizA, double[][] matrizB, double[][] matrizRes, int N, int M) {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -282,6 +340,12 @@ public class StrassenNaiv {
         }
     }
 
+    /**
+     * Este método es un envoltorio para el método algStrassenNaiv.
+     * Toma dos matrices y las multiplica utilizando el algoritmo de Strassen naive.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     */
     public static void multiply(double[][] matrizA, double[][] matrizB) {
         int N = matrizA.length;
         int P = matrizB.length;

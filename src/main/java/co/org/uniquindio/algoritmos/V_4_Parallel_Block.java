@@ -2,8 +2,23 @@ package co.org.uniquindio.algoritmos;
 
 import java.util.Arrays;
 
+/**
+ * Esta clase contiene métodos para multiplicar matrices utilizando un enfoque paralelo por bloques.
+ * Dividiendo las matrices en bloques más pequeños y realizando operaciones de multiplicación en cada bloque en paralelo.
+ *  @autor Marlon Stiven Espinosa Joaqui
+ *  @autor Juan Esteban Quintero Rodriguez
+ *  @autor Jesus Santiago Ramon Ramos
+ */
 public class V_4_Parallel_Block {
-    public static void alg_V_4_ParallelBlockTres(double[][] matrizA, double[][] matrizB, int size1, int size2) {
+
+    /**
+     * Este método realiza la multiplicación de dos matrices utilizando un enfoque paralelo por bloques.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     * @param size1 El tamaño de la matriz resultado en la dimensión 1.
+     * @param size2 El tamaño de los bloques utilizados para la multiplicación.
+     */
+    public static void alg_V_4_ParallelBlock(double[][] matrizA, double[][] matrizB, int size1, int size2) {
         double[][] matrizC = new double[size1][size1];
         Arrays.stream(new int[]{0}).parallel().forEach(i1 -> {
             for (i1 = 0; i1 < size1; i1 += size2) {
@@ -22,9 +37,15 @@ public class V_4_Parallel_Block {
         });
     }
 
+    /**
+     * Este método es un envoltorio para el método alg_V_4_ParallelBlock.
+     * Toma dos matrices y las multiplica utilizando el algoritmo de bloque paralelo.
+     * @param matrizA La primera matriz a multiplicar.
+     * @param matrizB La segunda matriz a multiplicar.
+     */
     public static void multiply(double[][] matrizA, double[][] matrizB) {
         int N = matrizA.length;
         int P = matrizB.length;
-        alg_V_4_ParallelBlockTres(matrizA, matrizB, N, P);
+        alg_V_4_ParallelBlock(matrizA, matrizB, N, P);
     }
 }
